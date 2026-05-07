@@ -7,3 +7,5 @@ It can additionally be used to create synthetic Hospital Episode Statistics (HES
 These synthetic datasets can be used for developing code for data extraction and cleaning prior to accessing CPRD. Each dataset has an associated `config.py`. In these files parameters such as the number of patients, practices and consultations to synthesise can be adjusted.
 
 To run the code you will need python installed. The code was developed using python 3.11.8. All other dependencies can be found in `requirements.txt`. Bash commands to run the code are listed in `Makefile`. To generate both datasets, run `make all`.
+
+The scripts that create the synthetic data (`gen_data.py`) were written by GPT-5.5 using the data dictionaries as a reference. 
