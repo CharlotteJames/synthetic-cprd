@@ -12,6 +12,7 @@ np.random.seed(42)
 
 
 
+# HELPERS
 
 
 def random_date(start_date, end_date):
@@ -37,9 +38,11 @@ def generate_patid(pracid):
 
 
 
+# PATIENTS
 
 patient_df = pd.read_csv(CPRD_DIR + 'Patient.csv')
 
+# hospital TABLE
 
 hes_hospital_rows = []
 
@@ -111,6 +114,7 @@ hes_hospital_df = pd.DataFrame(
 )
   
 
+# HES DIAGNOSIS TABLE
 
 hes_diagnosis_rows = []
 
@@ -135,6 +139,7 @@ hes_diagnosis_df = pd.DataFrame(
 )
 
 
+# HES PROCEDURE TABLE
 
 hes_procedure_rows = []
 
@@ -165,6 +170,7 @@ hes_procedure_df = pd.DataFrame(
 )
 
 
+# APC COST TABLE
 
 apc_cost_rows = []
 
@@ -182,6 +188,7 @@ for epikey in epikeys:
 apc_cost_df = pd.DataFrame(apc_cost_rows)
 
 
+# HES CRITICAL CARE TABLE
 
 hes_criticalcare_rows = []
 
@@ -205,6 +212,7 @@ hes_criticalcare_df = pd.DataFrame(
     hes_criticalcare_rows
 )
 
+# HES MATERNITY TABLE
 
 hes_maternity_rows = []
 
@@ -239,6 +247,7 @@ hes_maternity_df = pd.DataFrame(
 )
 
 
+# EXPORT
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 

@@ -1,9 +1,13 @@
+
+# CONFIGURATION
+
 N_APPOINTMENTS = 8000
 
 OUTPUT_DIR = "data/hes_op/raw/"
 CPRD_DIR = "data/cprd/raw/"
 
 
+# LOOKUPS
 
 # Administrative category: 1=NHS, 2=Private
 ADMINCAT_VALUES = [1, 1, 1, 1, 1, 2]
@@ -82,6 +86,7 @@ SPEF_VALUES = [
 OPERSTAT_VALUES = ["1", "2", "2", "3", "4", "8"]
 
 
+# DIAGNOSIS CODES (ICD-10; <5% of OP appointments per spec)
 
 ICD10_CODES = [
     "I10",   # Essential hypertension
@@ -102,6 +107,7 @@ ICD10_CODES = [
 ]
 
 
+# OPCS-4 PROCEDURE CODES (5-15% of OP appointments per spec)
 
 OPCS_CODES = [
     "X401",

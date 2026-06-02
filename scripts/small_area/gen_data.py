@@ -11,6 +11,7 @@ np.random.seed(42)
 
 
 
+# HELPERS
 
 
 def rank_to_quintile(rank):
@@ -39,6 +40,7 @@ def quantiles(rank):
 
 
 
+# LOAD ALL CPRD PATIENTS
 
 patient_df = pd.read_csv(CPRD_DIR + "Patient.csv", dtype=str)
 
@@ -53,6 +55,7 @@ base_ranks = np.random.uniform(0, 1, size=n)
 
 
 
+# 1. IMD COMPOSITE (patient_imdcomposite)
 
 imdcomposite_rows = []
 
@@ -74,6 +77,7 @@ patient_imdcomposite_df = pd.DataFrame(imdcomposite_rows)
 
 
 
+# 2. IMD DOMAINS (patient_imddomains)
 
 IMD_DOMAINS = [
     "income",
@@ -114,6 +118,8 @@ patient_imddomains_df = pd.DataFrame(imddomains_rows)
 
 
 
+# 3. TOWNSEND (patient_townsend)
+# Correlated with composite IMD but independently derived
 
 townsend_rows = []
 
@@ -139,6 +145,8 @@ patient_townsend_df = pd.DataFrame(townsend_rows)
 
 
 
+# 4. CARSTAIRS (patient_carstairs)
+# Correlated with composite IMD but independently derived
 
 carstairs_rows = []
 
@@ -164,6 +172,8 @@ patient_carstairs_df = pd.DataFrame(carstairs_rows)
 
 
 
+# 5. URBAN/RURAL (patient_urbanrural)
+# 1=Urban, 2=Rural; independent of deprivation score
 
 urbanrural_rows = []
 
@@ -183,6 +193,7 @@ patient_urbanrural_df = pd.DataFrame(urbanrural_rows)
 
 
 
+# EXPORT
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 

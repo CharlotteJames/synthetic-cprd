@@ -12,6 +12,7 @@ np.random.seed(42)
 
 
 
+# HELPERS
 
 
 def random_date(start_date, end_date):
@@ -30,11 +31,13 @@ def random_numeric_string(length):
 
 
 
+# LOAD CPRD PATIENTS
 
 patient_df = pd.read_csv(CPRD_DIR + "Patient.csv")
 
 
 
+# 1. PATIENT TABLE (hesop_patient)
 
 sampled_patients = patient_df.sample(
     n=min(N_APPOINTMENTS, len(patient_df)),
@@ -62,6 +65,7 @@ op_patids = hesop_patient_df["patid"].tolist()
 
 
 
+# 2. APPOINTMENT TABLE (hesop_appointment)
 
 hesop_appointment_rows = []
 
@@ -130,6 +134,7 @@ hesop_appointment_df = pd.DataFrame(
 
 
 
+# 3. PATIENT PATHWAY TABLE (hesop_patient_pathway)
 
 hesop_patient_pathway_rows = []
 
@@ -154,6 +159,8 @@ hesop_patient_pathway_df = pd.DataFrame(
 
 
 
+# 4. CLINICAL TABLE (hesop_clinical)
+# ~8% of appointments have clinical/diagnosis data (per spec)
 
 hesop_clinical_rows = []
 
@@ -191,6 +198,8 @@ hesop_clinical_df = pd.DataFrame(
 
 
 
+# 5. OPERATIONS TABLE (hesop_operation)
+# ~10% of appointments have operation data (per spec)
 
 hesop_operation_rows = []
 
@@ -228,6 +237,7 @@ hesop_operation_df = pd.DataFrame(
 
 
 
+# EXPORT
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 

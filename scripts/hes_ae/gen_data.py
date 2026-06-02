@@ -12,6 +12,7 @@ np.random.seed(42)
 
 
 
+# HELPERS
 
 
 def random_date(start_date, end_date):
@@ -30,11 +31,13 @@ def random_numeric_string(length):
 
 
 
+# LOAD CPRD PATIENTS
 
 patient_df = pd.read_csv(CPRD_DIR + "Patient.csv")
 
 
 
+# 1. PATIENT TABLE (hesae_patient)
 
 sampled_patients = patient_df.sample(
     n=min(N_ATTENDANCES, len(patient_df)),
@@ -62,6 +65,7 @@ ae_patids = hesae_patient_df["patid"].tolist()
 
 
 
+# 2. ATTENDANCE TABLE (hesae_attendance)
 
 hesae_attendance_rows = []
 
@@ -134,6 +138,7 @@ hesae_attendance_df = pd.DataFrame(
 
 
 
+# 3. DIAGNOSIS TABLE (hesae_diagnosis)
 
 hesae_diagnosis_rows = []
 
@@ -167,6 +172,7 @@ hesae_diagnosis_df = pd.DataFrame(
 
 
 
+# 4. INVESTIGATION TABLE (hesae_investigation)
 
 hesae_investigation_rows = []
 
@@ -194,6 +200,7 @@ hesae_investigation_df = pd.DataFrame(
 
 
 
+# 5. TREATMENT TABLE (hesae_treatment)
 
 hesae_treatment_rows = []
 
@@ -222,6 +229,7 @@ hesae_treatment_df = pd.DataFrame(
 
 
 
+# 6. HEALTH RESOURCE GROUP TABLE (hesae_hrg)
 
 hesae_hrg_rows = []
 
@@ -251,6 +259,7 @@ hesae_hrg_df = pd.DataFrame(hesae_hrg_rows)
 
 
 
+# 7. PATIENT PATHWAY TABLE (hesae_pathway)
 
 hesae_pathway_rows = []
 
@@ -285,6 +294,7 @@ hesae_pathway_df = pd.DataFrame(
 
 
 
+# EXPORT
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 

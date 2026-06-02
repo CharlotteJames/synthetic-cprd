@@ -1,3 +1,6 @@
+
+# CONFIGURATION
+
 OUTPUT_DIR = "data/small_area/raw/"
 CPRD_DIR = "data/cprd/raw/"
 

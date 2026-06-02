@@ -1,9 +1,12 @@
+# CONFIGURATION
+
 N_EPISODES = 10000
 
 OUTPUT_DIR = "data/hes/raw/"
 CPRD_DIR = 'data/cprd/raw/'
 
 
+# LOOKUPS
 
 SEX_VALUES = [1, 2]
 ADMIMETH_VALUES = ["11", "12", "13", "21", "22", "28"]
