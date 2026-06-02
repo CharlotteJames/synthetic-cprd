@@ -12,14 +12,18 @@ N_DRUG_ISSUES = 400
 
 OUTPUT_DIR = "./data/cprd/raw/"
 
-import os as _os, sys as _sys
+import os as _os, sys as _sys, random as _random
 _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
 from load_codelists import SNOMED_CODES, SNOMED_TERMS, DMD_CODES, DMD_TERMS
 del _os, _sys
 
-MEDCODE_POOL = SNOMED_CODES
+_rng = _random.Random(42)
+_snomed_sample = _rng.sample(list(zip(SNOMED_CODES, [t[1] for t in SNOMED_TERMS])), min(1000, len(SNOMED_CODES)))
+MEDCODE_POOL = [c for c, _ in _snomed_sample]
+MEDICAL_DICTIONARY_TERMS = [(c, t, "Disorder", "SNOMED") for c, t in _snomed_sample]
+del _rng, _snomed_sample, _random
+
 PRODCODE_POOL = DMD_CODES
-MEDICAL_DICTIONARY_TERMS = SNOMED_TERMS
 PRODUCT_DICTIONARY_TERMS = DMD_TERMS
 
 

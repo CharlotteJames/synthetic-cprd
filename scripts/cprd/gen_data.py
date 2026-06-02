@@ -34,10 +34,11 @@ def generate_numeric_text(min_len=6, max_len=19):
 
 
 
+_patid_seq = {}
+
 def generate_patid(pracid):
-    prefix_len = random.randint(1, 14)
-    prefix = "".join(random.choices("0123456789", k=prefix_len))
-    return f"{prefix}{str(pracid).zfill(5)}"
+    _patid_seq[pracid] = _patid_seq.get(pracid, 0) + 1
+    return f"{_patid_seq[pracid]}{str(pracid).zfill(5)}"
 
 
 

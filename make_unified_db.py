@@ -46,6 +46,24 @@ def main():
         out_con.execute("DETACH DATABASE src")
         out_con.commit()
 
+    indexes = [
+        "CREATE INDEX IF NOT EXISTS idx_Patient_patid            ON Patient(patid)",
+        "CREATE INDEX IF NOT EXISTS idx_Observation_patid        ON Observation(patid)",
+        "CREATE INDEX IF NOT EXISTS idx_Observation_medcodeid    ON Observation(medcodeid)",
+        "CREATE INDEX IF NOT EXISTS idx_DrugIssue_patid          ON DrugIssue(patid)",
+        "CREATE INDEX IF NOT EXISTS idx_DrugIssue_prodcodeid     ON DrugIssue(prodcodeid)",
+        "CREATE INDEX IF NOT EXISTS idx_hes_hospital_patid       ON hes_hospital(patid)",
+        "CREATE INDEX IF NOT EXISTS idx_hes_hospital_epikey      ON hes_hospital(epikey)",
+        "CREATE INDEX IF NOT EXISTS idx_hes_diagnosis_epikey     ON hes_diagnosis(epikey)",
+        "CREATE INDEX IF NOT EXISTS idx_hes_diagnosis_diagcode   ON hes_diagnosis(diagcode)",
+        "CREATE INDEX IF NOT EXISTS idx_hes_procedure_epikey     ON hes_procedure(epikey)",
+        "CREATE INDEX IF NOT EXISTS idx_hesae_attendance_patid   ON hesae_attendance(patid)",
+        "CREATE INDEX IF NOT EXISTS idx_hesae_diagnosis_patid    ON hesae_diagnosis(patid)",
+    ]
+    for ddl in indexes:
+        out_con.execute(ddl)
+    out_con.commit()
+
     out_con.close()
     print(f"\nUnified database written to {OUTPUT_DB}")
 
