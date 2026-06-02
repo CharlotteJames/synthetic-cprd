@@ -38,4 +38,4 @@ make_small_area_db: env generate_small_area
 	$(PYTHON) scripts/small_area/make_db.py
 
 make_unified_db: env make_cprd_db make_hes_apc_db make_hes_ae_db make_hes_op_db make_small_area_db
-	$(PYTHON) make_unified_db.py
+	$(PYTHON) scripts/make_unified_db.py
