@@ -2,8 +2,14 @@
 
 N_EPISODES = 10000
 
-OUTPUT_DIR = "data/hes/raw/"
+OUTPUT_DIR = "data/hes_apc/raw/"
 CPRD_DIR = 'data/cprd/raw/'
+
+
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+from load_codelists import ICD10_CODES
+del _os, _sys
 
 
 # LOOKUPS
@@ -16,24 +22,6 @@ CLASSPAT_VALUES = [1, 2, 3, 4]
 ADMINCAT_VALUES = [1, 2, 3]
 MAINSPEF_VALUES = ["100", "110", "120", "300", "301", "430"]
 TRETSPEF_VALUES = ["100", "110", "120", "300", "301", "430"]
-
-ICD10_CODES = [
-    "I10",
-    "E119",
-    "J459",
-    "N189",
-    "I500",
-    "F329",
-    "K219",
-    "M199",
-    "G439",
-    "U071",
-    "J189",
-    "L409",
-    "G409",
-    "I639",
-    "C509",
-]
 
 OPCS_CODES = [
     "X401",
