@@ -1,39 +1,3 @@
-# Synthetic HES APC Dataset Generator Linked to CPRD
-'''
-This Python script generates synthetic HES APC-style data linked to CPRD patient identifiers.
-
-The implementation follows the HES APC Data Dictionary v2.9 structure and preserves:
-
-* CPRD-compatible `patid`
-* HES-style episode and spell identifiers
-* Column names aligned to the specification
-* Appropriate data types and formats
-* NHS date formatting conventions
-* Multi-table linkage
-* CSV export for each table
-
-Generated tables:
-
-1. APC_Clinical
-2. APC_Diagnosis
-3. APC_Procedure
-4. APC_Cost
-5. APC_CriticalCare
-6. APC_Maternity
-
-All files are exported as `.csv`.
-
----
-
-## Python Requirements
-
-```bash
-pip install pandas numpy faker
-```
-
----
-'''
-## Synthetic HES APC Generator
 
 import os
 import random
@@ -48,9 +12,6 @@ np.random.seed(42)
 
 
 
-# ============================================================
-# HELPERS
-# ============================================================
 
 
 def random_date(start_date, end_date):
@@ -76,15 +37,9 @@ def generate_patid(pracid):
 
 
 
-# ============================================================
-# PATIENTS
-# ============================================================
 
 patient_df = pd.read_csv(CPRD_DIR + 'Patient.csv')
 
-# ============================================================
-# hospital TABLE
-# ============================================================
 
 hes_hospital_rows = []
 
@@ -156,9 +111,6 @@ hes_hospital_df = pd.DataFrame(
 )
   
 
-# ============================================================
-# HES DIAGNOSIS TABLE
-# ============================================================
 
 hes_diagnosis_rows = []
 
@@ -183,9 +135,6 @@ hes_diagnosis_df = pd.DataFrame(
 )
 
 
-# ============================================================
-# HES PROCEDURE TABLE
-# ============================================================
 
 hes_procedure_rows = []
 
@@ -216,9 +165,6 @@ hes_procedure_df = pd.DataFrame(
 )
 
 
-# ============================================================
-# APC COST TABLE
-# ============================================================
 
 apc_cost_rows = []
 
@@ -236,9 +182,6 @@ for epikey in epikeys:
 apc_cost_df = pd.DataFrame(apc_cost_rows)
 
 
-# ============================================================
-# HES CRITICAL CARE TABLE
-# ============================================================
 
 hes_criticalcare_rows = []
 
@@ -262,9 +205,6 @@ hes_criticalcare_df = pd.DataFrame(
     hes_criticalcare_rows
 )
 
-# ============================================================
-# HES MATERNITY TABLE
-# ============================================================
 
 hes_maternity_rows = []
 
@@ -299,9 +239,6 @@ hes_maternity_df = pd.DataFrame(
 )
 
 
-# ============================================================
-# EXPORT
-# ============================================================
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -334,30 +271,3 @@ hes_maternity_df.to_csv(
     f"{OUTPUT_DIR}/hes_maternity.csv",
     index=False,
 )
-
-'''
----
-
-## Notes on Fidelity
-
-This implementation preserves:
-
-* CPRD-compatible `patid`
-* HES APC-style `epikey`
-* ICD-10 diagnosis coding structure
-* OPCS-4 procedure coding structure
-* NHS DD/MM/YYYY date formatting
-* One-to-many diagnosis and procedure linkage
-* Episode-level hospital structure
-* Optional critical care and maternity linkage
-
-The data are synthetic and intended for:
-
-* ETL testing
-* SQL development
-* analytics pipelines
-* linkage testing
-* warehouse prototyping
-* longitudinal modelling
-* synthetic cohort generation
-'''

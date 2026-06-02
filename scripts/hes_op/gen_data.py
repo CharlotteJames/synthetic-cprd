@@ -1,39 +1,3 @@
-'''
-# HES OP Synthetic Data Generator Linked to CPRD
-
-This Python script generates synthetic HES Outpatient (OP) data linked to CPRD
-Aurum patient identifiers, following the HES OP Documentation v2.2 structure.
-
-The implementation preserves:
-
-* CPRD-compatible `patid` and `pracid`
-* HES-style `attendkey` record identifier (unique per patient)
-* Column names aligned to the specification
-* NHS yyyy/mm/dd date formatting
-* Realistic proportions: clinical data for ~8% of appointments,
-  operation data for ~10% of appointments (per known data completeness issues)
-
-Generated tables:
-
-1. hesop_patient
-2. hesop_appointment
-3. hesop_patient_pathway
-4. hesop_clinical
-5. hesop_operation
-
-All files are exported as `.csv`.
-
----
-
-## Python Requirements
-
-```bash
-pip install pandas numpy
-```
-
----
-'''
-## Synthetic HES OP Generator
 
 import os
 import random
@@ -48,9 +12,6 @@ np.random.seed(42)
 
 
 
-# ============================================================
-# HELPERS
-# ============================================================
 
 
 def random_date(start_date, end_date):
@@ -69,17 +30,11 @@ def random_numeric_string(length):
 
 
 
-# ============================================================
-# LOAD CPRD PATIENTS
-# ============================================================
 
 patient_df = pd.read_csv(CPRD_DIR + "Patient.csv")
 
 
 
-# ============================================================
-# 1. PATIENT TABLE (hesop_patient)
-# ============================================================
 
 sampled_patients = patient_df.sample(
     n=min(N_APPOINTMENTS, len(patient_df)),
@@ -107,9 +62,6 @@ op_patids = hesop_patient_df["patid"].tolist()
 
 
 
-# ============================================================
-# 2. APPOINTMENT TABLE (hesop_appointment)
-# ============================================================
 
 hesop_appointment_rows = []
 
@@ -178,9 +130,6 @@ hesop_appointment_df = pd.DataFrame(
 
 
 
-# ============================================================
-# 3. PATIENT PATHWAY TABLE (hesop_patient_pathway)
-# ============================================================
 
 hesop_patient_pathway_rows = []
 
@@ -205,10 +154,6 @@ hesop_patient_pathway_df = pd.DataFrame(
 
 
 
-# ============================================================
-# 4. CLINICAL TABLE (hesop_clinical)
-# ~8% of appointments have clinical/diagnosis data (per spec)
-# ============================================================
 
 hesop_clinical_rows = []
 
@@ -246,10 +191,6 @@ hesop_clinical_df = pd.DataFrame(
 
 
 
-# ============================================================
-# 5. OPERATIONS TABLE (hesop_operation)
-# ~10% of appointments have operation data (per spec)
-# ============================================================
 
 hesop_operation_rows = []
 
@@ -287,9 +228,6 @@ hesop_operation_df = pd.DataFrame(
 
 
 
-# ============================================================
-# EXPORT
-# ============================================================
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -320,29 +258,3 @@ hesop_operation_df.to_csv(
 
 print("HES OP synthetic data generated")
 
-
-'''
----
-
-## Notes on Fidelity
-
-This implementation preserves:
-
-* CPRD-compatible `patid` and `pracid`
-* HES OP-style `attendkey` record identifier
-* NHS yyyy/mm/dd date formatting
-* Coverage period April 2003 – March 2025
-* Clinical records for ~8% of appointments (low by design: ICD-10 coding
-  not mandatory in OP per the HES OP documentation)
-* Operation records for ~10% of appointments
-* `dnadate` only populated when `attended` indicates DNA or patient cancelled
-* `apptage` derived from CPRD patient year of birth and appointment date
-* `reqdate` derived as `apptdate` minus `waiting` days
-
-The data are synthetic and intended for:
-
-* ETL testing
-* SQL development
-* analytics pipelines
-* linkage testing with CPRD and HES APC/A&E data
-'''

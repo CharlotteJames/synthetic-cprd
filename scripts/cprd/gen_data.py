@@ -1,40 +1,3 @@
-'''
-# CPRD Aurum Synthetic Data Generator
-
-This document contains a Python-based synthetic data generator for the major CPRD Aurum tables using the CPRD Aurum Data Specification v3.5.
-
-The generator:
-
-* Uses the same column names as the specification
-* Preserves data types and formatting conventions
-* Generates internally consistent linked identifiers
-* Produces realistic synthetic longitudinal primary care data
-* Exports pipe-delimited `.txt` files similar to CPRD extracts
-
-The implementation below covers:
-
-1. Patient
-2. Practice
-3. Staff
-4. Consultation
-5. Observation
-6. Referral
-7. Problem
-8. DrugIssue
-
-The specification referenced is CPRD Aurum Data Specification v3.5 dated 30 August 2024.
-
----
-
-## Python Requirements
-
-```bash
-pip install pandas numpy faker
-```
-
----
-'''
-## Synthetic Data Generator
 
 
 import random
@@ -49,9 +12,6 @@ np.random.seed(42)
 
 
 
-# ============================================================
-# HELPERS
-# ============================================================
 
 
 def random_date(start_date, end_date):
@@ -87,9 +47,6 @@ def generate_staffid(pracid):
 
 
 
-# ============================================================
-# 1. PRACTICE TABLE
-# ============================================================
 
 practices = []
 
@@ -111,9 +68,6 @@ for i in range(N_PRACTICES):
 practice_df = pd.DataFrame(practices)
 
 
-# ============================================================
-# 2. STAFF TABLE
-# ============================================================
 
 staff_rows = []
 staff_ids = []
@@ -135,9 +89,6 @@ for _ in range(N_STAFF):
 staff_df = pd.DataFrame(staff_rows)
 
 
-# ============================================================
-# 3. PATIENT TABLE
-# ============================================================
 
 patients = []
 patient_ids = []
@@ -195,9 +146,6 @@ for _ in range(N_PATIENTS):
 patient_df = pd.DataFrame(patients)
 
 
-# ============================================================
-# 4. CONSULTATION TABLE
-# ============================================================
 
 consultations = []
 consultation_ids = []
@@ -238,9 +186,6 @@ for _ in range(N_CONSULTATIONS):
 consultation_df = pd.DataFrame(consultations)
 
 
-# ============================================================
-# 5. OBSERVATION TABLE
-# ============================================================
 
 observations = []
 observation_ids = []
@@ -303,9 +248,6 @@ for _ in range(N_OBSERVATIONS):
 observation_df = pd.DataFrame(observations)
 
 
-# ============================================================
-# 6. REFERRAL TABLE
-# ============================================================
 
 referrals = []
 
@@ -322,9 +264,6 @@ for _, row in ref_obs.iterrows():
 referral_df = pd.DataFrame(referrals)
 
 
-# ============================================================
-# 7. PROBLEM TABLE
-# ============================================================
 
 problems = []
 
@@ -344,9 +283,6 @@ for _, row in problem_obs.iterrows():
 problem_df = pd.DataFrame(problems)
 
 
-# ============================================================
-# 8. DRUG ISSUE TABLE
-# ============================================================
 
 drug_issues = []
 
@@ -372,9 +308,6 @@ for _ in range(N_DRUG_ISSUES):
 
 drug_issue_df = pd.DataFrame(drug_issues)
 
-# ============================================================
-# 9. MEDICAL DICTIONARY TABLE
-# ============================================================
 
 medical_dictionary_rows = []
 
@@ -396,9 +329,6 @@ medical_dictionary_df = pd.DataFrame(
 )
 
 
-# ============================================================
-# 10. PRODUCT DICTIONARY TABLE
-# ============================================================
 
 product_dictionary_rows = []
 
@@ -435,9 +365,6 @@ product_dictionary_df = pd.DataFrame(
     product_dictionary_rows
 )
 
-# ============================================================
-# EXPORT FILES
-# ============================================================
 
 import os
 
@@ -505,38 +432,3 @@ product_dictionary_df.to_csv(
 )
 print("Synthetic CPRD Aurum data generated successfully")
 print(f"Files written to: {OUTPUT_DIR}")
-
-'''
-
----
-
-## Notes on Data Fidelity
-
-This generator preserves the following CPRD Aurum conventions:
-
-* `patid`, `obsid`, `consid`, `staffid`, `medcodeid`, and `prodcodeid` are stored as TEXT
-* Date fields use `DD/MM/YYYY`
-* Numeric values conform to specification precision
-* Patient/practice relationships are internally consistent
-* `patid` and `staffid` end with the associated `pracid`
-* Observation records support parent-child linkage through `parentobsid`
-* Consultation linkage is optional to reflect CPRD Aurum structure
-
-The generated data are synthetic and not statistically representative of real CPRD distributions.
-
----
-
-## Suggested Extensions
-
-You can improve realism further by:
-
-* Adding realistic disease trajectories
-* Creating SNOMED-compatible code clusters
-* Generating longitudinal prescribing patterns
-* Adding laboratory-specific value ranges
-* Simulating chronic disease episodes
-* Creating linked referral/problem chains
-* Adding practice-level variation
-* Modelling temporal censor
-
-'''

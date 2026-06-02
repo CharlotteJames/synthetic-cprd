@@ -1,27 +1,3 @@
-'''
-# Small Area Data Generator Linked to CPRD
-
-This script generates synthetic small area data linked to all CPRD Aurum patients,
-following the Small Area Data Patient Documentation v3.5.
-
-One record is produced per patient (using all patid/pracid values from Patient.csv).
-
-Deprivation scores are generated from a correlated random base rank so that the
-domain measures reproduce realistic inter-domain Spearman correlations (~0.94-0.97).
-Quintile, decile and twentile values are derived consistently from the same underlying
-rank so that e.g. quintile=1 always maps to deciles 1-2 and twentiles 1-4.
-
-Generated files:
-
-1. patient_imdcomposite   - composite IMD 2019 quintile/decile/twentile
-2. patient_imddomains     - 9 IMD 2019 domain/sub-domain quintile/decile/twentile
-3. patient_townsend       - Townsend 2011 quintile/decile/twentile
-4. patient_carstairs      - Carstairs 2011 quintile/decile/twentile
-5. patient_urbanrural     - 2011 Urban/Rural binary classification
-
-All files are exported as .csv.
-'''
-## Synthetic Small Area Data Generator
 
 import os
 import random
@@ -35,9 +11,6 @@ np.random.seed(42)
 
 
 
-# ============================================================
-# HELPERS
-# ============================================================
 
 
 def rank_to_quintile(rank):
@@ -66,9 +39,6 @@ def quantiles(rank):
 
 
 
-# ============================================================
-# LOAD ALL CPRD PATIENTS
-# ============================================================
 
 patient_df = pd.read_csv(CPRD_DIR + "Patient.csv", dtype=str)
 
@@ -83,9 +53,6 @@ base_ranks = np.random.uniform(0, 1, size=n)
 
 
 
-# ============================================================
-# 1. IMD COMPOSITE (patient_imdcomposite)
-# ============================================================
 
 imdcomposite_rows = []
 
@@ -107,9 +74,6 @@ patient_imdcomposite_df = pd.DataFrame(imdcomposite_rows)
 
 
 
-# ============================================================
-# 2. IMD DOMAINS (patient_imddomains)
-# ============================================================
 
 IMD_DOMAINS = [
     "income",
@@ -150,10 +114,6 @@ patient_imddomains_df = pd.DataFrame(imddomains_rows)
 
 
 
-# ============================================================
-# 3. TOWNSEND (patient_townsend)
-# Correlated with composite IMD but independently derived
-# ============================================================
 
 townsend_rows = []
 
@@ -179,10 +139,6 @@ patient_townsend_df = pd.DataFrame(townsend_rows)
 
 
 
-# ============================================================
-# 4. CARSTAIRS (patient_carstairs)
-# Correlated with composite IMD but independently derived
-# ============================================================
 
 carstairs_rows = []
 
@@ -208,10 +164,6 @@ patient_carstairs_df = pd.DataFrame(carstairs_rows)
 
 
 
-# ============================================================
-# 5. URBAN/RURAL (patient_urbanrural)
-# 1=Urban, 2=Rural; independent of deprivation score
-# ============================================================
 
 urbanrural_rows = []
 
@@ -231,9 +183,6 @@ patient_urbanrural_df = pd.DataFrame(urbanrural_rows)
 
 
 
-# ============================================================
-# EXPORT
-# ============================================================
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 

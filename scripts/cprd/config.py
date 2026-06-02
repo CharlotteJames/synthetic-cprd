@@ -1,8 +1,3 @@
-
-# ============================================================
-# CONFIGURATION
-# ============================================================
-
 N_PRACTICES = 100
 N_PATIENTS = 10000
 N_STAFF = 120
@@ -15,9 +10,6 @@ N_DRUG_ISSUES = 400
 OUTPUT_DIR = "./data/cprd/raw/"
 
 
-# ============================================================
-# LOOKUP VALUES
-# ============================================================
 
 GENDER_VALUES = [1, 2]
 PATIENT_TYPE_VALUES = [1, 2, 3]
@@ -233,9 +225,6 @@ PRODCODE_POOL = [
     "200000000100",
 ]
 
-# ============================================================
-# SYNTHETIC MEDICAL DICTIONARY SOURCE DATA
-# ============================================================
 
 MEDICAL_DICTIONARY_TERMS = [
     ("100000000001", "Essential hypertension", "Disorder", "SNOMED"),
@@ -340,9 +329,6 @@ MEDICAL_DICTIONARY_TERMS = [
     ("100000000100", "End of life care discussion", "Procedure", "SNOMED"),
 ]
 
-# ============================================================
-# SYNTHETIC PRODUCT DICTIONARY SOURCE DATA
-# ============================================================
 
 PRODUCT_DICTIONARY_TERMS = [
     ("200000000001", "Metformin 500mg tablets", "Metformin", "Tablet"),

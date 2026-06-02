@@ -1,41 +1,3 @@
-'''
-# HES A&E Synthetic Data Generator Linked to CPRD
-
-This Python script generates synthetic HES A&E data linked to CPRD Aurum patient
-identifiers, following the HES A&E Documentation v1.9 structure.
-
-The implementation preserves:
-
-* CPRD-compatible `patid` and `pracid`
-* HES-style `aekey` record identifier (unique per patient)
-* Column names aligned to the specification
-* NHS DD/MM/YYYY date formatting
-* A&E-specific coding for diagnoses, investigations and treatments
-* One-to-many linkage for diagnosis, investigation and treatment tables
-
-Generated tables:
-
-1. hesae_patient
-2. hesae_attendance
-3. hesae_diagnosis
-4. hesae_investigation
-5. hesae_treatment
-6. hesae_hrg
-7. hesae_pathway
-
-All files are exported as `.csv`.
-
----
-
-## Python Requirements
-
-```bash
-pip install pandas numpy
-```
-
----
-'''
-## Synthetic HES A&E Generator
 
 import os
 import random
@@ -50,9 +12,6 @@ np.random.seed(42)
 
 
 
-# ============================================================
-# HELPERS
-# ============================================================
 
 
 def random_date(start_date, end_date):
@@ -71,17 +30,11 @@ def random_numeric_string(length):
 
 
 
-# ============================================================
-# LOAD CPRD PATIENTS
-# ============================================================
 
 patient_df = pd.read_csv(CPRD_DIR + "Patient.csv")
 
 
 
-# ============================================================
-# 1. PATIENT TABLE (hesae_patient)
-# ============================================================
 
 sampled_patients = patient_df.sample(
     n=min(N_ATTENDANCES, len(patient_df)),
@@ -109,9 +62,6 @@ ae_patids = hesae_patient_df["patid"].tolist()
 
 
 
-# ============================================================
-# 2. ATTENDANCE TABLE (hesae_attendance)
-# ============================================================
 
 hesae_attendance_rows = []
 
@@ -184,9 +134,6 @@ hesae_attendance_df = pd.DataFrame(
 
 
 
-# ============================================================
-# 3. DIAGNOSIS TABLE (hesae_diagnosis)
-# ============================================================
 
 hesae_diagnosis_rows = []
 
@@ -220,9 +167,6 @@ hesae_diagnosis_df = pd.DataFrame(
 
 
 
-# ============================================================
-# 4. INVESTIGATION TABLE (hesae_investigation)
-# ============================================================
 
 hesae_investigation_rows = []
 
@@ -250,9 +194,6 @@ hesae_investigation_df = pd.DataFrame(
 
 
 
-# ============================================================
-# 5. TREATMENT TABLE (hesae_treatment)
-# ============================================================
 
 hesae_treatment_rows = []
 
@@ -281,9 +222,6 @@ hesae_treatment_df = pd.DataFrame(
 
 
 
-# ============================================================
-# 6. HEALTH RESOURCE GROUP TABLE (hesae_hrg)
-# ============================================================
 
 hesae_hrg_rows = []
 
@@ -313,9 +251,6 @@ hesae_hrg_df = pd.DataFrame(hesae_hrg_rows)
 
 
 
-# ============================================================
-# 7. PATIENT PATHWAY TABLE (hesae_pathway)
-# ============================================================
 
 hesae_pathway_rows = []
 
@@ -350,9 +285,6 @@ hesae_pathway_df = pd.DataFrame(
 
 
 
-# ============================================================
-# EXPORT
-# ============================================================
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -393,27 +325,3 @@ hesae_pathway_df.to_csv(
 
 print("HES A&E synthetic data generated")
 
-
-'''
----
-
-## Notes on Fidelity
-
-This implementation preserves:
-
-* CPRD-compatible `patid` and `pracid`
-* HES A&E-style `aekey` record identifier
-* 6-character A&E diagnosis, investigation and treatment codes
-  with derived sub-fields (diag2, diag3, diaga, diags; invest2; treat2, treat3)
-* NHS DD/MM/YYYY date formatting
-* Coverage period 1 April 2007 – 31 March 2020
-* One-to-many linkage for diagnosis, investigation, treatment tables
-* Referral to treatment pathway data for 15% of attendances
-
-The data are synthetic and intended for:
-
-* ETL testing
-* SQL development
-* analytics pipelines
-* linkage testing with CPRD and HES APC data
-'''

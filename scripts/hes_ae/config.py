@@ -1,17 +1,9 @@
-
-# ============================================================
-# CONFIGURATION
-# ============================================================
-
 N_ATTENDANCES = 5000
 
 OUTPUT_DIR = "data/hes_ae/raw/"
 CPRD_DIR = "data/cprd/raw/"
 
 
-# ============================================================
-# LOOKUPS
-# ============================================================
 
 # Attendance category: 1=first, 2=planned follow-up, 3=unplanned follow-up
 AEATTENDCAT_VALUES = [1, 2, 3]
@@ -55,12 +47,6 @@ MATCH_RANK_VALUES = [1, 1, 1, 1, 2, 2, 2, 3, 4, 5]
 DIAGSCHEME_VALUES = ["02", "02", "02", "02", "02", "01"]
 
 
-# ============================================================
-# A&E DIAGNOSIS CODES
-# 6-character format: condition(n2) + sub-analysis(n1) +
-#                     anatomical area(n2) + side(an1)
-# diag2 = [0:2], diag3 = [0:3], diaga = [3:5], diags = [5]
-# ============================================================
 
 AE_DIAG_CODES = [
     "01001L",  # Laceration, head/face, left
@@ -94,11 +80,6 @@ AE_DIAG_CODES = [
 ]
 
 
-# ============================================================
-# A&E INVESTIGATION CODES
-# 6-character format: investigation(n2) + sub-analysis(up to an4)
-# invest2 = [0:2]
-# ============================================================
 
 AE_INVEST_CODES = [
     "010000",  # None
@@ -114,11 +95,6 @@ AE_INVEST_CODES = [
 ]
 
 
-# ============================================================
-# A&E TREATMENT CODES
-# 6-character format: treatment(n2) + sub-analysis(n1) + local(up to an3)
-# treat2 = [0:2], treat3 = [0:3]
-# ============================================================
 
 AE_TREAT_CODES = [
     "010000",  # None
@@ -134,9 +110,6 @@ AE_TREAT_CODES = [
 ]
 
 
-# ============================================================
-# HEALTH RESOURCE GROUP CODES (A&E VB codes)
-# ============================================================
 
 AE_HRG_CODES = [
     "VB01Z",  # Minor head injury
