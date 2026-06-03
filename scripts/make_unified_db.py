@@ -1,12 +1,3 @@
-"""
-Combines all synthetic CPRD/HES/small-area SQLite databases into a single
-unified database at data/synthetic_cprd.db, ready for use with CPRDBackend.
-
-Must be run from the synthetic-cprd repository root.
-Databases are copied in order; tables from later databases silently overwrite
-earlier ones if names clash (none currently do).
-"""
-
 import os
 import sqlite3
 
