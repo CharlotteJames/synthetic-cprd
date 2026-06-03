@@ -1,15 +1,16 @@
 # CONFIGURATION
 
-N_EPISODES = 10000
+import os
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+from load_codelists import ICD10_CODES
+
+# CONFIGURATION
+
+N_EPISODES = int(os.environ.get("SYNTH_N_EPISODES", 10000))
 
 OUTPUT_DIR = "data/hes_apc/raw/"
 CPRD_DIR = 'data/cprd/raw/'
-
-
-import os as _os, sys as _sys
-_sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
-from load_codelists import ICD10_CODES
-del _os, _sys
 
 
 # LOOKUPS

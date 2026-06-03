@@ -1,5 +1,6 @@
 
 
+import os
 import random
 from datetime import datetime, timedelta
 
@@ -397,8 +398,6 @@ product_dictionary_df = pd.DataFrame(
 )
 
 # EXPORT FILES
-
-import os
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 

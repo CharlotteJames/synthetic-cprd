@@ -1,7 +1,8 @@
 
 # CONFIGURATION
 
-N_ATTENDANCES = 5000
+import os
+N_ATTENDANCES = int(os.environ.get("SYNTH_N_ATTENDANCES", 5000))
 
 OUTPUT_DIR = "data/hes_ae/raw/"
 CPRD_DIR = "data/cprd/raw/"

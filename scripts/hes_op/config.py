@@ -1,7 +1,14 @@
 
 # CONFIGURATION
 
-N_APPOINTMENTS = 8000
+import os
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+from load_codelists import ICD10_CODES
+
+# CONFIGURATION
+
+N_APPOINTMENTS = int(os.environ.get("SYNTH_N_APPOINTMENTS", 8000))
 
 OUTPUT_DIR = "data/hes_op/raw/"
 CPRD_DIR = "data/cprd/raw/"
@@ -87,11 +94,6 @@ OPERSTAT_VALUES = ["1", "2", "2", "3", "4", "8"]
 
 
 # DIAGNOSIS CODES (ICD-10; <5% of OP appointments per spec)
-
-import os as _os, sys as _sys
-_sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
-from load_codelists import ICD10_CODES
-del _os, _sys
 
 
 # OPCS-4 PROCEDURE CODES (5-15% of OP appointments per spec)

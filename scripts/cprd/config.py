@@ -1,23 +1,26 @@
 
 # CONFIGURATION
 
-N_PRACTICES = 100
-N_PATIENTS = 10000
-N_STAFF = 120
-N_CONSULTATIONS = 50000
-N_OBSERVATIONS = 12000
-N_REFERRALS = 120
-N_PROBLEMS = 180
-N_DRUG_ISSUES = 400
+import os
+import sys
+import random
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+from load_codelists import SNOMED_CODES, SNOMED_TERMS, DMD_CODES, DMD_TERMS
+
+# CONFIGURATION
+
+N_PRACTICES     = int(os.environ.get("SYNTH_N_PRACTICES",     100))
+N_PATIENTS      = int(os.environ.get("SYNTH_N_PATIENTS",      10000))
+N_STAFF         = int(os.environ.get("SYNTH_N_STAFF",         120))
+N_CONSULTATIONS = int(os.environ.get("SYNTH_N_CONSULTATIONS", 50000))
+N_OBSERVATIONS  = int(os.environ.get("SYNTH_N_OBSERVATIONS",  12000))
+N_REFERRALS     = int(os.environ.get("SYNTH_N_REFERRALS",     120))
+N_PROBLEMS      = int(os.environ.get("SYNTH_N_PROBLEMS",      180))
+N_DRUG_ISSUES   = int(os.environ.get("SYNTH_N_DRUG_ISSUES",   400))
 
 OUTPUT_DIR = "./data/cprd/raw/"
 
-import os as _os, sys as _sys, random as _random
-_sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
-from load_codelists import SNOMED_CODES, SNOMED_TERMS, DMD_CODES, DMD_TERMS
-del _os, _sys
-
-_rng = _random.Random(42)
+_rng = random.Random(42)
 _snomed_sample = _rng.sample(list(zip(SNOMED_CODES, [t[1] for t in SNOMED_TERMS])), min(1000, len(SNOMED_CODES)))
 # CPRD-internal medcodeids: sequential 6-digit codes, distinct from SNOMED concept IDs
 MEDCODE_POOL = [str(100000 + i) for i in range(len(_snomed_sample))]
@@ -26,7 +29,6 @@ MEDICAL_DICTIONARY_TERMS = [
     (str(100000 + i), term, snomed_code)
     for i, (snomed_code, term) in enumerate(_snomed_sample)
 ]
-del _rng, _snomed_sample, _random
 
 # CPRD-internal prodcodeids: sequential 6-digit codes, distinct from DM+D IDs
 PRODCODE_POOL = [str(200000 + i) for i in range(len(DMD_CODES))]
