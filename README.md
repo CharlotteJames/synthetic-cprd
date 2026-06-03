@@ -13,5 +13,5 @@ These synthetic datasets can be used for developing code for data extraction and
 
 Diagnoses and medications present in the synthetic data are derived from the codelists in the `codelsits` directory. These codelists were obtained from [OpenCodelists](https://www.opencodelists.org). Adding your own codelists to this directory will increase the fidelity of the data for your project. 
 
-To run the code you will need python installed. The code was developed using python 3.11.8. All other dependencies can be found in `requirements.txt`. Bash commands to run the code are listed in `Makefile`. To generate both datasets, run `make all`.
+To run the code you will need python installed. The code was developed using python 3.11.8. All other dependencies can be found in `requirements.txt`. Bash commands to run the code are listed in `Makefile`. To generate all datasets, run `make all`.
 
