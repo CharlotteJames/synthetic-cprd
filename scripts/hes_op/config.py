@@ -88,23 +88,10 @@ OPERSTAT_VALUES = ["1", "2", "2", "3", "4", "8"]
 
 # DIAGNOSIS CODES (ICD-10; <5% of OP appointments per spec)
 
-ICD10_CODES = [
-    "I10",   # Essential hypertension
-    "E119",  # Type 2 diabetes without complications
-    "J459",  # Asthma, unspecified
-    "N189",  # Chronic kidney disease, unspecified
-    "I500",  # Congestive heart failure
-    "F329",  # Depressive episode, unspecified
-    "K219",  # Gastro-oesophageal reflux without oesophagitis
-    "M199",  # Osteoarthritis, unspecified
-    "G439",  # Migraine, unspecified
-    "J189",  # Pneumonia, unspecified
-    "L409",  # Psoriasis, unspecified
-    "G409",  # Epilepsy, unspecified
-    "I639",  # Cerebral infarction, unspecified
-    "C509",  # Malignant neoplasm of breast, unspecified
-    "M545",  # Low back pain
-]
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+from load_codelists import ICD10_CODES
+del _os, _sys
 
 
 # OPCS-4 PROCEDURE CODES (5-15% of OP appointments per spec)
