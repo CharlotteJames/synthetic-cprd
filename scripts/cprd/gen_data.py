@@ -266,6 +266,12 @@ for _, row in ref_obs.iterrows():
         {
             "patid": row["patid"],
             "obsid": row["obsid"],
+            "pracid": row["pracid"],
+            "refsourceorgid": None,
+            "reftargetorgid": None,
+            "refurgencyid": random.choice(REFURGENCY_VALUES),
+            "refservicetypeid": random.choice(REFSERVICETYPE_VALUES),
+            "refmodeid": random.choice(REFMODE_VALUES),
         }
     )
 
@@ -279,13 +285,25 @@ problems = []
 problem_obs = observation_df.sample(N_PROBLEMS)
 
 for _, row in problem_obs.iterrows():
+    prob_start = random_date(datetime(2010, 1, 1), datetime(2023, 1, 1))
+    lastrev = random_date(prob_start, datetime(2025, 1, 1))
+    candidate_staff = staff_df.loc[staff_df["pracid"] == row["pracid"], "staffid"]
+    lastrevstaffid = random.choice(candidate_staff.tolist()) if len(candidate_staff) > 0 else None
+
     problems.append(
         {
             "patid": row["patid"],
             "obsid": row["obsid"],
+            "pracid": row["pracid"],
             "parentprobobsid": "",
-            "significance": random.choice([1, 2, 3]),
-            "expectedduration": random.choice([1, 2, 3]),
+            "probenddate": format_date(random_date(prob_start, datetime(2025, 1, 1)))
+                if random.random() < 0.3 else "",
+            "expduration": random.randint(1, 365),
+            "lastrevdate": format_date(lastrev),
+            "lastrevstaffid": lastrevstaffid,
+            "parentprobrelid": random.choice(PARENTPROBREL_VALUES),
+            "probstatusid": random.choice(PROBSTATUS_VALUES),
+            "signid": random.choice(SIGN_VALUES),
         }
     )
 
@@ -303,15 +321,26 @@ for _ in range(N_DRUG_ISSUES):
 
     issueid = generate_numeric_text(10, 19)
 
+    enter_date = issue_date + timedelta(days=random.randint(0, 3))
+    candidate_staff = staff_df.loc[staff_df["pracid"] == patient["pracid"], "staffid"]
+    staffid = random.choice(candidate_staff.tolist()) if len(candidate_staff) > 0 else None
+
     drug_issues.append(
         {
             "patid": patient["patid"],
             "issueid": issueid,
             "pracid": patient["pracid"],
+            "probobsid": "",
+            "drugrecid": None,
             "issuedate": format_date(issue_date),
+            "enterdate": format_date(enter_date),
+            "staffid": staffid,
             "prodcodeid": random.choice(PRODCODE_POOL),
-            "qty": round(random.uniform(1, 90), 2),
-            "dosageid": random.randint(1, 1000),
+            "dosageid": str(random.randint(1, 1000)),
+            "quantity": round(random.uniform(1, 90), 2),
+            "quantunitid": random.choice(QUANTUNIT_VALUES),
+            "duration": random.randint(1, 90),
+            "estnhscost": round(random.uniform(0.5, 50.0), 2),
         }
     )
 
@@ -322,16 +351,18 @@ drug_issue_df = pd.DataFrame(drug_issues)
 
 medical_dictionary_rows = []
 
-for medcodeid, term, entity_type, vocabulary in MEDICAL_DICTIONARY_TERMS:
+for medcodeid, term, snomedctconceptid in MEDICAL_DICTIONARY_TERMS:
 
     medical_dictionary_rows.append(
         {
             "medcodeid": medcodeid,
             "term": term,
-            "entitytype": entity_type,
-            "vocabulary": vocabulary,
-            "chapter": random.randint(1, 20),
-            "iscurrent": 1,
+            "originalreadcode": "",
+            "cleansedreadcode": "",
+            "snomedctconceptid": snomedctconceptid,
+            "snomedctdescriptionid": generate_numeric_text(15, 18),
+            "release": None,
+            "emiscodecategoryid": random.randint(1, 20),
         }
     )
 
@@ -344,32 +375,20 @@ medical_dictionary_df = pd.DataFrame(
 
 product_dictionary_rows = []
 
-for (
-    prodcodeid,
-    productname,
-    drugsubstancename,
-    formulation,
-) in PRODUCT_DICTIONARY_TERMS:
+for prodcodeid, termfromemis, dmdid in PRODUCT_DICTIONARY_TERMS:
 
     product_dictionary_rows.append(
         {
             "prodcodeid": prodcodeid,
-            "productname": productname,
-            "drugsubstancename": drugsubstancename,
-            "formulation": formulation,
-            "strength": random.choice(
-                [
-                    "5mg",
-                    "20mg",
-                    "100mcg",
-                    "500mg",
-                ]
-            ),
-            "bnfchapter": (
-                f"{random.randint(1,15)}."
-                f"{random.randint(1,9)}"
-            ),
-            "iscurrent": 1,
+            "dmdid": dmdid,
+            "termfromemis": termfromemis,
+            "productname": termfromemis,
+            "formulation": random.choice(["Tablet", "Capsule", "Solution", "Inhaler"]),
+            "routeofadministration": random.choice(["Oral", "Topical", "Inhaled", "Intravenous"]),
+            "drugsubstancename": termfromemis,
+            "substancestrength": random.choice(["5mg", "10mg", "20mg", "50mg", "100mg", "500mg", "100mcg", "200mcg"]),
+            "bnfchapter": f"{random.randint(1, 15)}.{random.randint(1, 9)}",
+            "release": None,
         }
     )
 

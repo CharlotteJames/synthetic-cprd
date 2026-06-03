@@ -79,17 +79,17 @@ _snomed, _icd10, _dmd = _load_all()
 
 # Exported vocabularies -------------------------------------------------------
 
-# SNOMED CT codes for Observation.medcodeid
+# SNOMED CT concept IDs (used as snomedctconceptid in MedicalDictionary)
 SNOMED_CODES = list(_snomed.keys())
 
-# (medcodeid, term, entity_type, vocabulary) — for MedDictionary table
-SNOMED_TERMS = [(code, term, "Disorder", "SNOMED") for code, term in _snomed.items()]
+# (snomedctconceptid, term) pairs — for building MedicalDictionary entries
+SNOMED_TERMS = [(code, term) for code, term in _snomed.items()]
 
 # ICD-10 codes for hes_diagnosis.diagcode and hes_hospital.diag_01
 ICD10_CODES = list(_icd10.keys())
 
-# dm+d codes for DrugIssue.prodcodeid
+# dm+d codes (used as dmdid in ProductDictionary)
 DMD_CODES = list(_dmd.keys())
 
-# (prodcodeid, productname, drugsubstancename, formulation) — for ProductDictionary table
-DMD_TERMS = [(code, term, term, "Tablet") for code, term in _dmd.items()]
+# (dmdid, term) pairs — for building ProductDictionary entries
+DMD_TERMS = [(code, term) for code, term in _dmd.items()]

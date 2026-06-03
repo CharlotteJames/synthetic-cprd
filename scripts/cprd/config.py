@@ -19,12 +19,22 @@ del _os, _sys
 
 _rng = _random.Random(42)
 _snomed_sample = _rng.sample(list(zip(SNOMED_CODES, [t[1] for t in SNOMED_TERMS])), min(1000, len(SNOMED_CODES)))
-MEDCODE_POOL = [c for c, _ in _snomed_sample]
-MEDICAL_DICTIONARY_TERMS = [(c, t, "Disorder", "SNOMED") for c, t in _snomed_sample]
+# CPRD-internal medcodeids: sequential 6-digit codes, distinct from SNOMED concept IDs
+MEDCODE_POOL = [str(100000 + i) for i in range(len(_snomed_sample))]
+# (medcodeid, term, snomedctconceptid) — medcodeid is CPRD-internal; snomedctconceptid is the SNOMED code
+MEDICAL_DICTIONARY_TERMS = [
+    (str(100000 + i), term, snomed_code)
+    for i, (snomed_code, term) in enumerate(_snomed_sample)
+]
 del _rng, _snomed_sample, _random
 
-PRODCODE_POOL = DMD_CODES
-PRODUCT_DICTIONARY_TERMS = DMD_TERMS
+# CPRD-internal prodcodeids: sequential 6-digit codes, distinct from DM+D IDs
+PRODCODE_POOL = [str(200000 + i) for i in range(len(DMD_CODES))]
+# (prodcodeid, termfromemis, dmdid) — prodcodeid is CPRD-internal; dmdid is the DM+D code
+PRODUCT_DICTIONARY_TERMS = [
+    (str(200000 + i), term, dmd_code)
+    for i, (dmd_code, term) in enumerate(DMD_TERMS)
+]
 
 
 # LOOKUP VALUES
@@ -36,3 +46,10 @@ JOBCAT_VALUES = [1, 2, 3, 4, 5, 6]
 OBSTYPE_VALUES = [1, 2, 3, 4]
 NUMUNIT_VALUES = [1, 2, 3, 4, 5]
 CONS_SOURCE_VALUES = [1001, 1002, 1003, 1004]
+REFURGENCY_VALUES = [1, 2, 3]       # Lookup: RefUrgency.txt (routine, urgent, dated)
+REFSERVICETYPE_VALUES = [1, 2, 3]   # Lookup: RefServiceType.txt
+REFMODE_VALUES = [1, 2, 3]          # Lookup: RefMode.txt
+PARENTPROBREL_VALUES = [1, 2, 3]    # Lookup: ParentProbRel.txt
+PROBSTATUS_VALUES = [1, 2]          # Lookup: ProbStatus.txt (active, past)
+SIGN_VALUES = [1, 2]                # Lookup: Sign.txt (minor, significant)
+QUANTUNIT_VALUES = [1, 2, 3, 4]     # Lookup: QuantUnit.txt

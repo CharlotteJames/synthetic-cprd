@@ -2,11 +2,11 @@ import os
 import sqlite3
 
 DATABASES = [
-    "../data/cprd/cprd.db",
-    "../data/hes_apc/hes_apc.db",
-    "../data/hes_ae/hes_ae.db",
-    "../data/hes_op/hes_op.db",
-    "../data/small_area/small_area.db",
+    "data/cprd/cprd.db",
+    "data/hes_apc/hes_apc.db",
+    "data/hes_ae/hes_ae.db",
+    "data/hes_op/hes_op.db",
+    "data/small_area/small_area.db",
 ]
 
 OUTPUT_DB = "data/synthetic_cprd.db"
