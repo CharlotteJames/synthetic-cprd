@@ -9,14 +9,14 @@ from load_codelists import SNOMED_CODES, SNOMED_TERMS, DMD_CODES, DMD_TERMS
 
 # CONFIGURATION
 
-N_PRACTICES     = int(os.environ.get("SYNTH_N_PRACTICES",     100))
-N_PATIENTS      = int(os.environ.get("SYNTH_N_PATIENTS",      10000))
-N_STAFF         = int(os.environ.get("SYNTH_N_STAFF",         120))
-N_CONSULTATIONS = int(os.environ.get("SYNTH_N_CONSULTATIONS", 50000))
-N_OBSERVATIONS  = int(os.environ.get("SYNTH_N_OBSERVATIONS",  12000))
-N_REFERRALS     = int(os.environ.get("SYNTH_N_REFERRALS",     120))
-N_PROBLEMS      = int(os.environ.get("SYNTH_N_PROBLEMS",      180))
-N_DRUG_ISSUES   = int(os.environ.get("SYNTH_N_DRUG_ISSUES",   400))
+N_PRACTICES     = 100
+N_PATIENTS      = 10000
+N_STAFF         = 120
+N_CONSULTATIONS = 50000
+N_OBSERVATIONS  = 12000
+N_REFERRALS     = 120
+N_PROBLEMS      = 180
+N_DRUG_ISSUES   = 400
 
 OUTPUT_DIR = "./data/cprd/raw/"
 

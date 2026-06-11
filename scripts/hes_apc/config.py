@@ -7,7 +7,7 @@ from load_codelists import ICD10_CODES
 
 # CONFIGURATION
 
-N_EPISODES = int(os.environ.get("SYNTH_N_EPISODES", 10000))
+N_EPISODES = 10000
 
 OUTPUT_DIR = "data/hes_apc/raw/"
 CPRD_DIR = 'data/cprd/raw/'
